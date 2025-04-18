@@ -1,0 +1,12 @@
+E:\Job_Protal\src\main\java\com\dao\jobDAO.java
+E:\Job_Protal\src\main\java\com\dao\UserDAO.java
+E:\Job_Protal\src\main\java\com\DB\DBConnection.java
+E:\Job_Protal\src\main\java\com\entity\Jobs.java
+E:\Job_Protal\src\main\java\com\entity\User.java
+E:\Job_Protal\src\main\java\com\servlet\AddPost.java
+E:\Job_Protal\src\main\java\com\servlet\DeleteJobServlet.java
+E:\Job_Protal\src\main\java\com\servlet\loginServlet.java
+E:\Job_Protal\src\main\java\com\servlet\LogoutServlet.java
+E:\Job_Protal\src\main\java\com\servlet\RegisterServlet.java
+E:\Job_Protal\src\main\java\com\servlet\UpdateJobServlet.java
+E:\Job_Protal\src\main\java\com\servlet\UpdateUserServlet.java
