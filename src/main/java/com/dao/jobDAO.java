@@ -1,4 +1,4 @@
- package com.dao;
+package com.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -278,6 +278,91 @@ public class jobDAO {
 	}
 	
 	
+	// Adding missing methods for job search functionality
 	
+	// Method to search for jobs by location
+	public List<Jobs> getJobsORLocation(String location) {
+		List<Jobs> list = new ArrayList<>();
+		Jobs j = null;
+		try {
+			String query = "select * from jobs where locations=? and status='Active' order by id desc";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, location);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				j = new Jobs();
+				j.setId(rs.getInt(1));
+				j.setTitle(rs.getString(2));
+				j.setDescription(rs.getString(3));
+				j.setCategory(rs.getString(4));
+				j.setStatus(rs.getString(5));
+				j.setLocation(rs.getString(6));
+				j.setPdate(rs.getString(7));
+				list.add(j);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	// Method to search for jobs by category
+	public List<Jobs> getJobsORCategory(String category) {
+		List<Jobs> list = new ArrayList<>();
+		Jobs j = null;
+		try {
+			String query = "select * from jobs where category=? and status='Active' order by id desc";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, category);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				j = new Jobs();
+				j.setId(rs.getInt(1));
+				j.setTitle(rs.getString(2));
+				j.setDescription(rs.getString(3));
+				j.setCategory(rs.getString(4));
+				j.setStatus(rs.getString(5));
+				j.setLocation(rs.getString(6));
+				j.setPdate(rs.getString(7));
+				list.add(j);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	// Method to search for jobs by keyword
+	public List<Jobs> searchJobsByKeyword(String keyword) {
+		List<Jobs> list = new ArrayList<>();
+		Jobs j = null;
+		try {
+			String query = "select * from jobs where (title LIKE ? or description LIKE ? or category LIKE ? or locations LIKE ?) and status='Active' order by id desc";
+			PreparedStatement ps = con.prepareStatement(query);
+			String searchPattern = "%" + keyword + "%";
+			ps.setString(1, searchPattern);
+			ps.setString(2, searchPattern);
+			ps.setString(3, searchPattern);
+			ps.setString(4, searchPattern);
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				j = new Jobs();
+				j.setId(rs.getInt(1));
+				j.setTitle(rs.getString(2));
+				j.setDescription(rs.getString(3));
+				j.setCategory(rs.getString(4));
+				j.setStatus(rs.getString(5));
+				j.setLocation(rs.getString(6));
+				j.setPdate(rs.getString(7));
+				list.add(j);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
 } // ✅ This is the only closing brace needed. Delete any after this.
