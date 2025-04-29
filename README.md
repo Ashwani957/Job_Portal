@@ -4,50 +4,25 @@ A comprehensive job portal web application that connects job seekers with employ
 
 ## 📋 Table of Contents
 
-- [Job Portal Application](#job-portal-application)
-  - [📋 Table of Contents](#-table-of-contents)
-  - [📝 Overview](#-overview)
-  - [✨ Features](#-features)
-    - [For Job Seekers](#for-job-seekers)
-    - [For Employers/Admins](#for-employersadmins)
-  - [🛠️ Tech Stack](#️-tech-stack)
-    - [Frontend](#frontend)
-    - [Backend](#backend)
-    - [Database](#database)
-    - [Build Tools](#build-tools)
-  - [🏗️ Architecture](#️-architecture)
-  - [🖥️ Frontend](#️-frontend)
-  - [⚙️ Backend](#️-backend)
-  - [🗄️ Database](#️-database)
-  - [🚀 Getting Started](#-getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-      - [Windows](#windows)
-      - [Linux/macOS](#linuxmacos)
-    - [Running the Application](#running-the-application)
-      - [Using Cargo with Maven](#using-cargo-with-maven)
-      - [Alternative Method: Manual Deployment](#alternative-method-manual-deployment)
-      - [Database Connection](#database-connection)
-  - [🔄 DevOps Practices/Deployment](#-devops-practicesdeployment)
-    - [Continuous Integration](#continuous-integration)
-    - [Deployment Options](#deployment-options)
-    - [Sample Docker Deployment](#sample-docker-deployment)
-  - [🔍 Troubleshooting](#-troubleshooting)
-    - [JSTL Issues](#jstl-issues)
-    - [Common Errors](#common-errors)
-      - [HTTP Status 500 - Internal Server Error](#http-status-500---internal-server-error)
-  - [📸 Screenshots](#-screenshots)
-  - [📄 License](#-license)
-  - [Star 🤩](#star-)
+- [Overview](#-overview)
+- [Features](#-features)
+- [Technology Stack](#-technology-stack)
+- [Project Structure](#-project-structure)
+- [Installation and Setup](#-installation-and-setup)
+- [Running the Application](#-running-the-application)
+- [UI Components](#-ui-components)
+- [Database Schema](#-database-schema)
+- [Common Issues and Troubleshooting](#-common-issues-and-troubleshooting)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ## 📝 Overview
 
-The Job Portal is a dynamic web application designed to streamline the job search and recruitment process. It provides a user-friendly interface for job seekers to explore opportunities and for employers to find qualified candidates.
+The Job Portal application is a Java-based web application that provides a platform for job seekers to find employment opportunities and for employers to post job listings. The application follows the MVC (Model-View-Controller) architecture pattern and is built using Jakarta EE technologies.
 
 ## ✨ Features
 
 ### For Job Seekers
-
 - User registration and profile management
 - Browse and search job listings with advanced filters
 - Apply for jobs with resume/CV upload
@@ -55,260 +30,236 @@ The Job Portal is a dynamic web application designed to streamline the job searc
 - Save favorite job listings
 
 ### For Employers/Admins
-
 - Post and manage job listings
 - Review and manage applications
 - Update job status (active/inactive)
 - Edit job details and requirements
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
 ### Frontend
-
-- HTML5, CSS3
-- Bootstrap 5 for responsive design
-- JSP (JavaServer Pages) for server-side rendering
-- JSTL (JSP Standard Tag Library) for dynamic content
-- Font Awesome for icons
-- AOS (Animate On Scroll) library for animations
+- **JSP (JavaServer Pages)**: For dynamic content generation
+- **JSTL (JSP Standard Tag Library)**: For conditional rendering and iteration
+- **HTML/CSS**: For structure and styling
+- **Bootstrap 4.6**: For responsive design and UI components
+- **Font Awesome**: For icons
+- **AOS (Animate On Scroll)**: For scroll animations
 
 ### Backend
-
-- Java EE (Enterprise Edition)
-- Servlets for handling HTTP requests
-- Jakarta EE 9+ for modern Java web development
-- JDBC for database connectivity
+- **Java**: Core programming language
+- **Jakarta EE 9+**: Java Enterprise Edition framework
+- **Servlets**: For handling HTTP requests and responses
+- **JDBC**: For database connectivity
 
 ### Database
-
-- MySQL for data persistence
+- **MySQL 8.0+**: Relational database for data storage
 
 ### Build Tools
+- **Maven**: For dependency management and build automation
 
-- Maven for dependency management and build automation
+## 🗂️ Project Structure
 
-## 🏗️ Architecture
+```
+job-portal/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   ├── com/
+│   │   │   │   ├── DB/
+│   │   │   │   │   └── DBConnection.java     # Database connection utility
+│   │   │   │   ├── dao/
+│   │   │   │   │   ├── jobDAO.java           # Data access for jobs
+│   │   │   │   │   └── ...                   # Other DAO classes
+│   │   │   │   ├── entity/
+│   │   │   │   │   ├── Jobs.java             # Job entity
+│   │   │   │   │   └── ...                   # Other entity classes
+│   │   │   │   └── servlet/
+│   │   │   │       ├── LoginServlet.java     # Authentication servlet
+│   │   │   │       └── ...                   # Other controller servlets
+│   │   ├── resources/
+│   │   │   └── database.sql                  # Database initialization script
+│   │   └── webapp/
+│   │       ├── all_component/
+│   │       │   ├── all_css.jsp               # Common CSS includes
+│   │       │   ├── Footer.jsp                # Footer component
+│   │       │   ├── navbar.jsp                # Navigation bar component
+│   │       │   └── style.css                 # Custom styles
+│   │       ├── img/                          # Image assets
+│   │       ├── WEB-INF/
+│   │       │   └── web.xml                   # Deployment descriptor
+│   │       ├── home.jsp                      # Home page
+│   │       ├── login.jsp                     # Login page
+│   │       ├── Signup.jsp                    # Registration page
+│   │       └── ...                           # Other JSP pages
+│   └── test/                                 # Test classes
+├── .classpath                                # Eclipse classpath configuration
+├── .project                                  # Eclipse project configuration
+├── fix-taglibs.ps1                           # Script for fixing JSTL issues (Windows)
+├── fix-taglibs.sh                            # Script for fixing JSTL issues (Linux/macOS)
+├── pom.xml                                   # Maven project configuration
+└── README.md                                 # Project documentation
+```
 
-The application follows a Model-View-Controller (MVC) architecture:
-
-- **Model**: Represented by entity classes (`User.java`, `Jobs.java`, etc.) and DAO (Data Access Object) classes for database operations
-- **View**: JSP pages for the user interface
-- **Controller**: Servlet classes that handle HTTP requests and responses
-
-## 🖥️ Frontend
-
-The frontend is built using JSP pages with Bootstrap for responsive design. Key design principles include:
-
-- Mobile-first approach for responsive layouts
-- Modern UI with card-based design
-- Interactive elements with smooth animations
-- Form validation for user input
-- Consistent styling throughout the application
-
-## ⚙️ Backend
-
-The backend is implemented using Java servlets that handle various application functions:
-
-- Authentication and authorization
-- Job listing management
-- Application processing
-- File uploads (resumes/CVs)
-- Database operations
-
-## 🗄️ Database
-
-The application uses a MySQL database with the following main tables:
-
-- `users`: Stores user account information
-- `jobs`: Contains job listing details
-- `job_applications`: Tracks job applications
-- `user_profiles`: Stores detailed user profile information
-
-## 🚀 Getting Started
+## 🔧 Installation and Setup
 
 ### Prerequisites
 
-To run this application locally, you need:
-
+Before you begin, ensure you have the following installed:
 - JDK 11 or higher
 - Apache Tomcat 10.0 or higher
 - MySQL 8.0 or higher
 - Maven 3.6 or higher
+- Git (optional, for cloning the repository)
 
-### Installation
-
-#### Windows
-
-1. **Clone the repository**
-
-   ```
-   git clone https://github.com/yourusername/job-portal.git
-   cd job-portal
-   ```
-
-2. **Set up the database**
-
-   ```
-   mysql -u root -p
-   ```
-
-   ```sql
-   CREATE DATABASE job_portal;
-   USE job_portal;
-   ```
-
-   Execute the SQL script in `src/main/resources/database.sql` to create tables.
-
-3. **Configure database connection**
-   Update the database connection parameters in `src/main/java/com/DB/DBConnection.java` if needed.
-
-4. **Build the project**
-   ```
-   mvn clean package
-   ```
-
-#### Linux/macOS
+### Setup Instructions
 
 1. **Clone the repository**
-
    ```bash
    git clone https://github.com/yourusername/job-portal.git
    cd job-portal
    ```
 
 2. **Set up the database**
-
+   
+   Start your MySQL server and create a new database:
    ```bash
    mysql -u root -p
    ```
-
+   
+   In the MySQL shell:
    ```sql
    CREATE DATABASE job_portal;
    USE job_portal;
+   SOURCE src/main/resources/database.sql;  # Run the DB initialization script
    ```
 
-   Execute the SQL script in `src/main/resources/database.sql` to create tables.
-
 3. **Configure database connection**
-   Update the database connection parameters in `src/main/java/com/DB/DBConnection.java` if needed.
+   
+   Update the database connection parameters in `src/main/java/com/DB/DBConnection.java` if needed:
+   ```java
+   // Example configuration
+   private static final String URL = "jdbc:mysql://localhost:3306/job_portal";
+   private static final String USER = "root";
+   private static final String PASSWORD = "yourpassword";
+   ```
 
-4. **Build the project**
+4. **Fix JSTL issues (if needed)**
+   
+   If you encounter issues with JSTL tags, run the provided script:
+   
+   For Windows:
+   ```
+   .\fix-taglibs.ps1
+   ```
+   
+   For Linux/macOS:
+   ```bash
+   chmod +x fix-taglibs.sh
+   ./fix-taglibs.sh
+   ```
+
+5. **Build the project**
    ```bash
    mvn clean package
    ```
 
-### Running the Application
+## 🚀 Running the Application
 
-#### Using Cargo with Maven
+### Using Maven with Cargo
 
-1. **Run with Cargo Maven plugin**
-   ```
-   mvn clean install
-   mvn cargo:run
-   ```
-   This will start the application on `http://localhost:8080/Job_Portal`
+The simplest way to run the application is using the Cargo Maven plugin:
 
-#### Alternative Method: Manual Deployment
+```bash
+mvn clean install
+mvn cargo:run
+```
 
-1. **Build the application**
+This will start the application on `http://localhost:8080/Job_Portal`
 
-   ```
+### Manual Deployment to Tomcat
+
+1. Build the application:
+   ```bash
    mvn clean package
    ```
 
-2. **Deploy WAR file to Tomcat**
-   Copy the generated `target/Job_Portal.war` file to Tomcat's `webapps` directory.
-
-3. **Start Tomcat**
-
-   **Windows:**
-
+2. Copy the WAR file to Tomcat's webapps directory:
+   ```bash
+   cp target/Job_Portal.war /path/to/tomcat/webapps/
    ```
-   cd path\to\tomcat\bin
+
+3. Start Tomcat:
+   
+   For Windows:
+   ```
+   cd /path/to/tomcat/bin
    startup.bat
    ```
-
-   **Linux/macOS:**
-
+   
+   For Linux/macOS:
    ```bash
    cd /path/to/tomcat/bin
    ./startup.sh
    ```
 
-4. **Access the application**
-   Open your browser and go to `http://localhost:8080/Job_Portal`
+4. Access the application at `http://localhost:8080/Job_Portal`
 
-#### Database Connection
+## 🎨 UI Components
 
-Ensure MySQL is running:
+The application uses several shared UI components for consistency:
 
-**Windows:**
+### Navbar (`navbar.jsp`)
+- Responsive navigation bar that changes based on user role
+- Dynamic links for administrators and job seekers
+- User profile modal for logged-in users
 
-```
-net start mysql
-```
+### Footer (`Footer.jsp`)
+- Contains links to important sections
+- Social media links
+- Contact information
 
-**Linux/macOS:**
+### CSS Styles (`style.css`)
+- Custom styling for the entire application
+- Color variables for consistent theming
+- Responsive design adjustments
 
-```bash
-sudo systemctl start mysql
-```
+## 🗄️ Database Schema
 
-## 🔄 DevOps Practices/Deployment
+The application uses a MySQL database with the following main tables:
 
-### Continuous Integration
+- **users**: Stores user account information
+  - `id` (Primary Key)
+  - `name`
+  - `email`
+  - `password`
+  - `qualification`
+  - `role` (admin/user)
 
-The project can be integrated with CI/CD tools like:
+- **jobs**: Contains job listing details
+  - `id` (Primary Key)
+  - `title`
+  - `description`
+  - `category`
+  - `status` (Active/Inactive)
+  - `location`
+  - `company`
+  - `pdate` (posting date)
 
-- Jenkins
-- GitHub Actions
-- GitLab CI
+- **job_applications**: Tracks job applications
+  - `id` (Primary Key)
+  - `job_id` (Foreign Key to jobs)
+  - `user_id` (Foreign Key to users)
+  - `status`
+  - `application_date`
 
-### Deployment Options
+## 🔍 Common Issues and Troubleshooting
 
-- **Traditional Deployment**: Deploy WAR file to Tomcat server
-- **Docker Deployment**: Containerize the application using Docker
-- **Cloud Deployment**: Deploy to cloud platforms like AWS, Azure, or Google Cloud
+### JSTL Tag Library Issues
 
-### Sample Docker Deployment
+If you encounter an error like "Unable to find taglib [c] for URI: [jakarta.tags.core]":
 
-1. **Build Docker image**
-
-   ```
-   docker build -t job-portal .
-   ```
-
-2. **Run Docker container**
-   ```
-   docker run -p 8080:8080 job-portal
-   ```
-
-## 🔍 Troubleshooting
-
-### JSTL Issues
-
-If you encounter an error like "Unable to find taglib [c] for URI: [jakarta.tags.core]", you can resolve it by running the provided fix script:
-
-**Windows:**
-
-```
-.\fix-taglibs.ps1
-```
-
-**Linux/macOS:**
-
-```bash
-chmod +x fix-taglibs.sh
-./fix-taglibs.sh
-```
-
-This script changes the JSTL taglib URI from `jakarta.tags.core` to `http://java.sun.com/jsp/jstl/core`, which is compatible with the Jakarta EE 9+ libraries when using Tomcat 10.
-
-### Common Errors
-
-#### HTTP Status 500 - Internal Server Error
-
-If you're seeing HTTP Status 500 errors with a message about JSTL tags, make sure your pom.xml contains the correct JSTL dependencies:
+1. Run the fix script provided in the repository
+2. Check your pom.xml for the correct JSTL dependencies:
 
 ```xml
 <dependency>
@@ -323,19 +274,48 @@ If you're seeing HTTP Status 500 errors with a message about JSTL tags, make sur
 </dependency>
 ```
 
-## 📸 Screenshots
+### Database Connection Issues
 
-_Coming soon_
+If you're experiencing database connectivity problems:
+
+1. Verify MySQL is running:
+   ```bash
+   # Windows
+   net start mysql
+   
+   # Linux/macOS
+   sudo systemctl status mysql
+   ```
+
+2. Check the connection parameters in `DBConnection.java`
+3. Ensure your database user has the correct permissions
+
+### HTTP Status 500 Errors
+
+For internal server errors:
+
+1. Check Tomcat logs in `/path/to/tomcat/logs/catalina.out`
+2. Verify the JDBC driver is correctly included in your dependencies
+3. Ensure all required libraries are in the classpath
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how to contribute:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/your-feature`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add some feature'`)
+5. Push to the branch (`git push origin feature/your-feature`)
+6. Open a Pull Request
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Star 🤩
-
-If you like the project you can star the project.
-
 ---
 
 Made with ❤️ by Ashwani Maurya
+
+If you like the project, please give it a ⭐️!
 
