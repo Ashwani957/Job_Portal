@@ -10,6 +10,7 @@ A comprehensive job portal web application that connects job seekers with employ
 - [Project Structure](#-project-structure)
 - [Installation and Setup](#-installation-and-setup)
 - [Running the Application](#-running-the-application)
+- [Docker Deployment](#-docker-deployment)
 - [UI Components](#-ui-components)
 - [Database Schema](#-database-schema)
 - [Common Issues and Troubleshooting](#-common-issues-and-troubleshooting)
@@ -23,6 +24,7 @@ The Job Portal application is a Java-based web application that provides a platf
 ## ✨ Features
 
 ### For Job Seekers
+
 - User registration and profile management
 - Browse and search job listings with advanced filters
 - Apply for jobs with resume/CV upload
@@ -30,6 +32,7 @@ The Job Portal application is a Java-based web application that provides a platf
 - Save favorite job listings
 
 ### For Employers/Admins
+
 - Post and manage job listings
 - Review and manage applications
 - Update job status (active/inactive)
@@ -38,6 +41,7 @@ The Job Portal application is a Java-based web application that provides a platf
 ## 🛠️ Technology Stack
 
 ### Frontend
+
 - **JSP (JavaServer Pages)**: For dynamic content generation
 - **JSTL (JSP Standard Tag Library)**: For conditional rendering and iteration
 - **HTML/CSS**: For structure and styling
@@ -46,15 +50,18 @@ The Job Portal application is a Java-based web application that provides a platf
 - **AOS (Animate On Scroll)**: For scroll animations
 
 ### Backend
+
 - **Java**: Core programming language
 - **Jakarta EE 9+**: Java Enterprise Edition framework
 - **Servlets**: For handling HTTP requests and responses
 - **JDBC**: For database connectivity
 
 ### Database
+
 - **MySQL 8.0+**: Relational database for data storage
 
 ### Build Tools
+
 - **Maven**: For dependency management and build automation
 
 ## 🗂️ Project Structure
@@ -105,6 +112,7 @@ job-portal/
 ### Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - JDK 11 or higher
 - Apache Tomcat 10.0 or higher
 - MySQL 8.0 or higher
@@ -114,19 +122,22 @@ Before you begin, ensure you have the following installed:
 ### Setup Instructions
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/yourusername/job-portal.git
    cd job-portal
    ```
 
 2. **Set up the database**
-   
+
    Start your MySQL server and create a new database:
+
    ```bash
    mysql -u root -p
    ```
-   
+
    In the MySQL shell:
+
    ```sql
    CREATE DATABASE job_portal;
    USE job_portal;
@@ -134,8 +145,9 @@ Before you begin, ensure you have the following installed:
    ```
 
 3. **Configure database connection**
-   
+
    Update the database connection parameters in `src/main/java/com/DB/DBConnection.java` if needed:
+
    ```java
    // Example configuration
    private static final String URL = "jdbc:mysql://localhost:3306/job_portal";
@@ -144,15 +156,17 @@ Before you begin, ensure you have the following installed:
    ```
 
 4. **Fix JSTL issues (if needed)**
-   
+
    If you encounter issues with JSTL tags, run the provided script:
-   
+
    For Windows:
+
    ```
    .\fix-taglibs.ps1
    ```
-   
+
    For Linux/macOS:
+
    ```bash
    chmod +x fix-taglibs.sh
    ./fix-taglibs.sh
@@ -179,24 +193,28 @@ This will start the application on `http://localhost:8080/Job_Portal`
 ### Manual Deployment to Tomcat
 
 1. Build the application:
+
    ```bash
    mvn clean package
    ```
 
 2. Copy the WAR file to Tomcat's webapps directory:
+
    ```bash
    cp target/Job_Portal.war /path/to/tomcat/webapps/
    ```
 
 3. Start Tomcat:
-   
+
    For Windows:
+
    ```
    cd /path/to/tomcat/bin
    startup.bat
    ```
-   
+
    For Linux/macOS:
+
    ```bash
    cd /path/to/tomcat/bin
    ./startup.sh
@@ -204,21 +222,87 @@ This will start the application on `http://localhost:8080/Job_Portal`
 
 4. Access the application at `http://localhost:8080/Job_Portal`
 
+## 🐳 Docker Deployment
+
+### Prerequisites for Docker Setup
+
+- Docker installed on your system
+- Docker Compose installed
+- Git (for cloning the repository)
+
+### Environment Setup
+
+1. **Configure Environment Variables**
+
+   ```bash
+   # Copy the example environment file
+   cp .env.example .env
+
+   # Edit the .env file with your preferred settings
+   nano .env
+   or
+   vim .env
+   or
+   Directoly via VSCode
+   ```
+
+   The `.env` file contains important configuration for both the application and database:
+
+   - Database credentials
+   - Application ports
+   - Java runtime options
+   - Database connection details
+
+2. **Important Environment Variables**
+   ```plaintext
+   MYSQL_ROOT_PASSWORD  # Root password for MySQL
+   MYSQL_DATABASE       # Database name (default: job_portal)
+   MYSQL_USER          # Application database user
+   MYSQL_PASSWORD      # Application database password
+   SERVER_PORT         # Port to access the application (default: 8080)
+   ```
+
+### Building and Running with Docker Compose
+
+1. **Start the Application**
+
+   ```bash
+   # Build and start all services
+   docker-compose up -d --build
+
+   # Check the logs
+   docker-compose logs -f
+   ```
+
+2. **Access the Application**
+
+   - Web Interface: `http://localhost:8080`
+   - Database: `localhost:3306`
+
+3. **Stop the Application**
+   ```bash
+   docker-compose down    # Stops containers, removes containers and networks
+   docker-compose down -v # Also removes volumes (will delete database data)
+   ```
+
 ## 🎨 UI Components
 
 The application uses several shared UI components for consistency:
 
 ### Navbar (`navbar.jsp`)
+
 - Responsive navigation bar that changes based on user role
 - Dynamic links for administrators and job seekers
 - User profile modal for logged-in users
 
 ### Footer (`Footer.jsp`)
+
 - Contains links to important sections
 - Social media links
 - Contact information
 
 ### CSS Styles (`style.css`)
+
 - Custom styling for the entire application
 - Color variables for consistent theming
 - Responsive design adjustments
@@ -228,6 +312,7 @@ The application uses several shared UI components for consistency:
 The application uses a MySQL database with the following main tables:
 
 - **users**: Stores user account information
+
   - `id` (Primary Key)
   - `name`
   - `email`
@@ -236,6 +321,7 @@ The application uses a MySQL database with the following main tables:
   - `role` (admin/user)
 
 - **jobs**: Contains job listing details
+
   - `id` (Primary Key)
   - `title`
   - `description`
@@ -279,10 +365,11 @@ If you encounter an error like "Unable to find taglib [c] for URI: [jakarta.tags
 If you're experiencing database connectivity problems:
 
 1. Verify MySQL is running:
+
    ```bash
    # Windows
    net start mysql
-   
+
    # Linux/macOS
    sudo systemctl status mysql
    ```
@@ -318,4 +405,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Made with ❤️ by Ashwani Maurya
 
 If you like the project, please give it a ⭐️!
-
