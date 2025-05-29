@@ -1,0 +1,43 @@
+# Ignore build tools' output
+target/
+build/
+
+# IDE files
+*.iml
+.idea/
+.vscode/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Git
+.git
+.gitignore
+
+# Node (if present, e.g., frontend in same repo)
+node_modules/
+npm-debug.log
+
+# Docker-related
+docker-compose.override.yml
+
+# Environment and secrets
+.env
+*.env
+*.pem
+*.key
+*.crt
+
+# Test reports
+test-output/
+coverage/
+
+# Misc
+*.class
+*.jar
+*.war
+*.ear
