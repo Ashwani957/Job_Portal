@@ -20,7 +20,7 @@ public class UserDAO {
 		boolean f = false ; 
 		
 		try {
-			String query="insert into user (name,qualification , email , password, role) values (?,?,?,?,?)";
+			String query="insert into users (name,qualification , email , password, role) values (?,?,?,?,?)";
 			PreparedStatement ps=con.prepareStatement(query);
 			ps.setString(1, u.getName());
 			ps.setString(2, u.getQulaification());
@@ -48,7 +48,7 @@ public class UserDAO {
 		
 		try {
 
-			String query="select * from user where email=? and password=?";
+			String query="select * from users where email=? and password=?";
 			PreparedStatement ps1=con.prepareStatement(query);
 			ps1.setString(1, em);
 			ps1.setString(2,psw);
@@ -78,7 +78,7 @@ public class UserDAO {
 		boolean f= false ; 
 		
 		try {
-			String sql="update user set name=?,qualification=?,email=?,password=? where id=?";
+			String sql="update users set name=?,qualification=?,email=?,password=? where id=?";
 			PreparedStatement ps=con.prepareStatement(sql);
 			ps.setString(1, u.getName());
 			ps.setString(2,u.getQulaification());
